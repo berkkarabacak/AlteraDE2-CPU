@@ -1,0 +1,50 @@
+.data
+.code
+        ldi 7 0x0078
+loop    call pol1
+		jmp loop
+pol1    ldi 0 0x0a00	
+		ldi 1 0x0000
+		ld 2 0
+		or 3 2 1
+		jz ret1
+		ldi 1 0x0001
+loop1   ld 2 0
+        and 3 1 2
+		jz rel1
+		jmp loop1
+rel1    ldi 0 0x0c00
+        ldi 1 0xffff
+		sub 1 5 1
+		jz ret1
+	    inc 5
+		inc 5
+		st 0 5
+		call clk
+ret1    jmp pol2
+
+pol2    ldi 0 0x0a01
+		ldi 1 0x0000
+		ld 2 0
+		or 3 2 1
+		jz ret2
+		ldi 1 0x0001
+loop2   ld 2 0
+        and 3 1 2
+		jz rel1
+		jmp loop2
+rel1    ldi 0 0x0c00
+        ldi 1 0x0000
+		or 1 5 1
+		jz ret2
+		dec 5
+		dec 5
+		st 0 5
+		call clk
+ret2    ret
+
+clk    ldi 0 0x0d00
+		ld 1 0
+		ldi 2 0x0c01
+		st 2 1
+		ret
